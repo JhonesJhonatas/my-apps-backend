@@ -5,7 +5,7 @@ import { AppError } from '@/errors/app-error'
 import { IUserRepository } from '@user/repository/i-user-repository'
 
 @injectable()
-export class DeleteUserUsecase {
+export class DeleteUserUseCase {
   constructor(
     @inject('UserRepository')
     private userRepository: IUserRepository,
