@@ -10,6 +10,7 @@ export class InMemoryTransactionRepository implements ITransactionRepository {
   create(props: ICreateTransactionDto): Promise<Transaction> {
     const transaction = {
       ...props,
+      installmentsId: props.installmentsId || null,
       id: randomUUID(),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -22,6 +23,20 @@ export class InMemoryTransactionRepository implements ITransactionRepository {
     )
 
     return Promise.resolve(createdTransaction as Transaction)
+  }
+
+  createMany(props: ICreateTransactionDto[]): Promise<number> {
+    const transactions = props.map((transaction) => ({
+      ...transaction,
+      id: randomUUID(),
+      installmentsId: transaction.installmentsId || null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }))
+
+    this.transactions.push(...transactions)
+
+    return Promise.resolve(transactions.length)
   }
 
   update(props: IUpdateTransactionDto): Promise<Transaction> {
@@ -52,5 +67,21 @@ export class InMemoryTransactionRepository implements ITransactionRepository {
     const [deletedTransaction] = this.transactions.splice(transactionIndex, 1)
 
     return Promise.resolve(deletedTransaction)
+  }
+
+  findById(id: string): Promise<Transaction | null> {
+    const foundTransaction = this.transactions.find(
+      (transaction) => transaction.id === id,
+    )
+
+    return Promise.resolve(foundTransaction || null)
+  }
+
+  findByInstallmentsId(id: string): Promise<Transaction[] | null> {
+    const foundTransactions = this.transactions.filter(
+      (transaction) => transaction.installmentsId === id,
+    )
+
+    return Promise.resolve(foundTransactions || null)
   }
 }

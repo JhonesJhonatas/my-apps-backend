@@ -32,14 +32,16 @@ model Notification {
 }
 
 model Transaction {
-  id        String   @id @default(uuid())
-  type      String
-  title     String
-  amount    Float
-  maturity  DateTime
-  paid      Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  id             String   @id @default(uuid())
+  type           String
+  title          String
+  amount         Float
+  maturity       DateTime
+  paid           Boolean
+  expenseType    String
+  installmentsId String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  User           User?    @relation(fields: [userId], references: [id])
+  userId         String?
 }

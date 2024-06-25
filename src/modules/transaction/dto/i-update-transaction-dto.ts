@@ -6,4 +6,5 @@ export interface IUpdateTransactionDto {
   maturity?: Date
   paid?: boolean
   userId?: string
+  expenseType: 'detached' | 'fixed' | 'inInstallment'
 }

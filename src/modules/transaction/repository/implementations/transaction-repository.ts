@@ -16,6 +16,14 @@ export class TransactionRepository implements ITransactionRepository {
     })
   }
 
+  async createMany(props: ICreateTransactionDto[]): Promise<number> {
+    const createdTransactions = await prismaClient.transaction.createMany({
+      data: props,
+    })
+
+    return createdTransactions.count
+  }
+
   async update(props: IUpdateTransactionDto): Promise<Transaction> {
     const { id, ...rest } = props
 
@@ -41,6 +49,14 @@ export class TransactionRepository implements ITransactionRepository {
     return await prismaClient.transaction.findUnique({
       where: {
         id,
+      },
+    })
+  }
+
+  async findByInstallmentsId(id: string): Promise<Transaction[] | null> {
+    return await prismaClient.transaction.findMany({
+      where: {
+        installmentsId: id,
       },
     })
   }

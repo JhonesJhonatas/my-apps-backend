@@ -1,18 +1,18 @@
 import { AppError } from '@/errors/app-error'
 
-import { DeleteUserUsecase } from '@/modules/user/use-cases/delete-user-use-case'
+import { DeleteUserUseCase } from '@/modules/user/use-cases/delete-user-use-case'
 
 import { InMemoryUserRepository } from '@user/repository/implementations/in-memory-user-repository'
 import { CreateUserUseCase } from '@user/use-cases/create-user-use-case'
 
 let createUserUsecase: CreateUserUseCase
-let deleteUserUseCase: DeleteUserUsecase
+let deleteUserUseCase: DeleteUserUseCase
 
 describe('delete-user-use-case', () => {
   beforeEach(async () => {
     const userRepository = new InMemoryUserRepository()
     createUserUsecase = new CreateUserUseCase(userRepository)
-    deleteUserUseCase = new DeleteUserUsecase(userRepository)
+    deleteUserUseCase = new DeleteUserUseCase(userRepository)
 
     await createUserUsecase.execute({
       birthDay: new Date(),
